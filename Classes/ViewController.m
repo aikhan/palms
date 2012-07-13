@@ -870,23 +870,27 @@ static NSUInteger voucherCount = 0 ;
         return;
     }
     */
-    NSMutableString *expirationString = [NSMutableString stringWithString:self.creditCardCVVTextField.text];//TODO: CCV field is connected with the expiration field from the IBOUtlet
-    NSLog(@"Original expString = %@", expirationString);
-    expirationString = [NSMutableString stringWithString:[expirationString stringByReplacingOccurrencesOfString:@"/" withString:@""]];
+    NSMutableString *tempExpString;
+    if(!isSwipe){
+        NSMutableString *expirationString = [NSMutableString stringWithString:self.creditCardCVVTextField.text];//TODO: CCV field is connected with the expiration field from the IBOUtlet
+        NSLog(@"Original expString = %@", expirationString);
+        expirationString = [NSMutableString stringWithString:[expirationString stringByReplacingOccurrencesOfString:@"/" withString:@""]];
         NSLog(@"changed expString = %@", expirationString);
-    NSMutableArray *chars = [[NSMutableArray alloc] initWithCapacity:[expirationString length]];
-    for (int i=0; i < [expirationString length]; i++) {
-        NSString *ichar  = [NSString stringWithFormat:@"%C", [expirationString characterAtIndex:i]];
-        [chars addObject:ichar];
+        NSMutableArray *chars = [[NSMutableArray alloc] initWithCapacity:[expirationString length]];
+        for (int i=0; i < [expirationString length]; i++) {
+            NSString *ichar  = [NSString stringWithFormat:@"%C", [expirationString characterAtIndex:i]];
+            [chars addObject:ichar];
+        }
+        NSLog(@"lenght of parsed array = %d", [chars count]);
+        tempExpString = [NSMutableString stringWithString:[chars objectAtIndex:2]];
+        [tempExpString appendString:[chars objectAtIndex:3]];
+        [tempExpString appendString:[chars objectAtIndex:0]];
+        [tempExpString appendString:[chars objectAtIndex:1]];
+        NSLog(@"Exp date IS %@", tempExpString);
+        NSLog(@"begin Transaction");
+        NSLog(@"%@ label balye", dancerPayTextField.text);
     }
-    NSLog(@"lenght of parsed array = %d", [chars count]);
-    NSMutableString *tempExpString = [NSMutableString stringWithString:[chars objectAtIndex:2]];
-    [tempExpString appendString:[chars objectAtIndex:3]];
-    [tempExpString appendString:[chars objectAtIndex:0]];
-    [tempExpString appendString:[chars objectAtIndex:1]];
-    NSLog(@"Exp date IS %@", tempExpString);
-    NSLog(@"begin Transaction");
-    NSLog(@"%@ label balye", dancerPayTextField.text);
+    
     NSString *tempString;// = [NSString stringWithString:dancerPayTextField.text];
     if (isVoucherPrint) {
         tempString = self.labelAboveCC.text;

@@ -258,7 +258,7 @@ void ConvertToMonochromeSteinbertDithering(ARGBPixel * image, int32_t width, int
 	{
 		h2 = (int)(((double)height * (float)maxWidth)/(double)width); //SCALLING IMAGE DOWN TO FIT ON PAPER IF TOO BIG
 		m_image =  ScaleImage(image, maxWidth, h2);
-		//m_image =  ScaleImage(image, 500, 606);
+		m_image =  ScaleImage(image, 500, 606);//TODO: Comment this line if image is still not getting scaled.
 		[image release];
 		[m_image retain];
 		

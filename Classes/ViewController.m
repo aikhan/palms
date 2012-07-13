@@ -1019,6 +1019,8 @@ static NSUInteger voucherCount = 0 ;
 //    voucherPrintVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 //    [self presentModalViewController:voucherPrintVC animated:YES];
     [PrinterManager PrintImageWithPortname:printerAddress portSettings:printerPort imageToPrint:voucherImage maxWidth:480];
+     PrinterManager *pm = (PrinterManager*)[PrinterManager shared];
+    [pm openCashDrawerWithPortname:portName portSettings:portSettings];
 }
 
 + (BOOL)checkReachabilityForHost:(NSString *)host{

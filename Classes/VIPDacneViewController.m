@@ -34,6 +34,7 @@ NSArray *myVoucherValuesArray;
     self.dataArray = [[NSMutableArray alloc] initWithObjects:@"5", @"10", @"15", @"20", @"25", @"30", @"35", @"40", @"45", @"50", @"55", @"60", @"65", @"70", @"75", @"80", @"85", @"90", @"95", @"100", nil];
     self.vipRateArray = [[NSMutableArray alloc] initWithObjects:@"0", @"2", @"3", @"5", nil];
     [super viewDidLoad];
+    NSLog(@"TAG NUMBER IS %d", self.tagNumber);
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -54,13 +55,13 @@ NSArray *myVoucherValuesArray;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (tagNumber == 102) {
+    if (self.tagNumber == 102) {
         NSLog(@"dance array count %d", [self.dancesPaymentArray count]);
         return [self.dancesPaymentArray count];
-    }else if (tagNumber == 101){
+    }else if (self.tagNumber == 101){
         NSLog(@"data array count %d", [self.dataArray count]);
         return [self.dataArray count];
-    }else if (tagNumber == 200){
+    }else if (self.tagNumber == 200){
         NSLog(@"data array count %d", [myVoucherValuesArray count]);
         return [myVoucherValuesArray count];
     }
@@ -71,13 +72,13 @@ NSArray *myVoucherValuesArray;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier = @"Cell";
-    
+    NSLog(@"TAG NUMBER CELLFOROW IS %d", self.tagNumber);
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         
     }
-    if (tagNumber == 102) {
+    if (self.tagNumber == 102) {
         cell.textLabel.text = [self.dancesPaymentArray objectAtIndex:indexPath.row];
         if (indexPath.row == danceSelectedRow) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
@@ -86,7 +87,7 @@ NSArray *myVoucherValuesArray;
         {
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
-    }else if (tagNumber == 100) {
+    }else if (self.tagNumber == 100) {
         cell.textLabel.text = [self.vipRateArray objectAtIndex:indexPath.row];
         if (indexPath.row == vipSelectedRow) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
@@ -96,7 +97,7 @@ NSArray *myVoucherValuesArray;
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
     }
-    else if (tagNumber == 200) {
+    else if (self.tagNumber == 200) {
         cell.textLabel.text = [myVoucherValuesArray objectAtIndex:indexPath.row];
 //        if (indexPath.row == vipSelectedRow) {
 //            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
@@ -106,7 +107,7 @@ NSArray *myVoucherValuesArray;
 //            [cell setAccessoryType:UITableViewCellAccessoryNone];
 //        }
     }
-    else if(tagNumber == 101){
+    else if(self.tagNumber == 101){
         cell.textLabel.text = [self.dataArray objectAtIndex:indexPath.row];
         if (indexPath.row == selectedRow) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];

@@ -546,15 +546,26 @@ static NSUInteger voucherCount = 0 ;
 
 - (IBAction)voucherAmountButtonTapped:(id)sender{
     NSLog(@"Do something");
-    vipDanceViewController.tagNumber = 200;
+//    self.vipDanceViewController = [[VIPDacneViewController alloc] init];
+//    self.vipDanceViewController.tagNumber = 200;
+//    self.vipPopOverController.delegate = self;
+//    CGRect frame = self.buttonAmountAboveCC.frame;
+//    [self.vipPopOverController presentPopoverFromRect:frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+//    [self.vipPopOverController setPopoverContentSize:CGSizeMake(320, 440)];
+//    self.vipDanceViewController.parentController = self;
+//    vipDanceViewController.tagNumber = 200;
+//    //vipDanceViewController.dancesPaymentArray = self.dancesPaymentArray;
+//    vipDanceViewController.view.frame = CGRectMake(0, 0, 320, 440);
+//    [vipDanceViewController.myTableView reloadData];
+//    
+    
     self.vipPopOverController.delegate = self;
-    CGRect frame = self.buttonAmountAboveCC.frame;
+    CGRect frame = self.buttonAmountAboveCC.frame;//CGRectMake(475, 115, 273, 35);
     [self.vipPopOverController presentPopoverFromRect:frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
     [self.vipPopOverController setPopoverContentSize:CGSizeMake(320, 440)];
     self.vipDanceViewController.parentController = self;
-    vipDanceViewController.tagNumber = 200;
-    //vipDanceViewController.dancesPaymentArray = self.dancesPaymentArray;
-    vipDanceViewController.view.frame = CGRectMake(0, 0, 320, 440);
+    vipDanceViewController.tagNumber = [sender tag];
+    [vipDanceViewController.myTableView reloadData];
 }
 
 -(void) dismissAddDancerPopover
@@ -715,7 +726,7 @@ static NSUInteger voucherCount = 0 ;
         paymentDetailsText.textAlignment = UITextAlignmentLeft;
         paymentDetailsText.text = [NSString stringWithFormat:@"%@",paymentDetails];
         [cell addSubview:paymentDetailsText];
-        NSLog(@"self payment detail sizr %d", [self.dancesPaymentDetails count]);
+//        NSLog(@"self payment detail sizr %d", [self.dancesPaymentDetails count]);
         return cell;
     }
     

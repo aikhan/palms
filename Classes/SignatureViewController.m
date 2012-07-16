@@ -13,7 +13,7 @@
 
 
 @implementation SignatureViewController
-@synthesize parentViewController;
+@synthesize parentViewController, doneButton, clearButton;
 @synthesize delegate = _delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -168,6 +168,8 @@
 
 - (UIImage *)captureView: (UIView *)view inSize: (CGSize)size
 {
+    self.doneButton.hidden = YES;
+    self.clearButton.hidden = YES;
     UIGraphicsBeginImageContext(size);
     CGSize viewSize = view.frame.size;
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -177,6 +179,8 @@
     
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    self.doneButton.hidden = NO;
+    self.clearButton.hidden = NO;
     return viewImage;
 }
 

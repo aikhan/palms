@@ -218,13 +218,19 @@ static NSUInteger voucherCount = 0 ;
            
         }
     }
-    if (isCashButtonSelected || isVoucherButtonSelected) {
+    if (isCashButtonSelected) {
         [self deductAndUpdateView];
         //[self OpenCashDrawer];
         PrinterManager *pm = (PrinterManager*)[PrinterManager shared];
         [pm openCashDrawerWithPortname:portName portSettings:portSettings];
+        [self TextRasterPrinting];
+        
     }else if (isCreditCardButtonSelected) {
        [self TextRasterPrinting]; 
+    }
+    else if (isVoucherButtonSelected) {
+        PrinterManager *pm = (PrinterManager*)[PrinterManager shared];
+        [pm openCashDrawerWithPortname:portName portSettings:portSettings];
     }
         
         
@@ -546,7 +552,7 @@ static NSUInteger voucherCount = 0 ;
     [self.vipPopOverController presentPopoverFromRect:frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
     [self.vipPopOverController setPopoverContentSize:CGSizeMake(320, 440)];
     self.vipDanceViewController.parentController = self;
-    
+    vipDanceViewController.tagNumber = 200;
     //vipDanceViewController.dancesPaymentArray = self.dancesPaymentArray;
     vipDanceViewController.view.frame = CGRectMake(0, 0, 320, 440);
 }
@@ -909,7 +915,7 @@ static NSUInteger voucherCount = 0 ;
    // NSString *xmlString = @"<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><CreditTransaction xmlns=\"http://www.mercurypay.com\"><tran>&lt;?xml version=\"1.0\"?&gt;&lt;TStream&gt;&lt;Transaction&gt;&lt;MerchantID&gt;595901&lt;/MerchantID&gt;&lt;OperatorID&gt;test&lt;/OperatorID&gt;&lt;TranType&gt;Credit&lt;/TranType&gt;&lt;TranCode&gt;Sale&lt;/TranCode&gt;&lt;InvoiceNo&gt;10&lt;/InvoiceNo&gt;&lt;RefNo&gt;10&lt;/RefNo&gt;&lt;Memo&gt;exuromar&lt;/Memo&gt;&lt;Account&gt; &lt;Track2&gt;4003000123456781=09085025432198712345&lt;/Track2&gt;&lt;Name&gt;MPS TEST&lt;/Name&gt;&lt;/Account&gt;&lt;Amount&gt;&lt;Purchase&gt;1.00&lt;/Purchase&gt;&lt;/Amount&gt;&lt;/Transaction&gt;&lt;/TStream&gt;</tran><pw>xyz</pw></CreditTransaction></soap:Body></soap:Envelope>";
     }
     else {
-        xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><CreditTransaction xmlns=\"http://www.mercurypay.com\"><tran>&lt;?xml version=\"1.0\"?&gt;&lt;TStream&gt;&lt;Transaction&gt;&lt;MerchantID&gt;395347305=E2ETKN&lt;/MerchantID&gt;&lt;OperatorID&gt;test&lt;/OperatorID&gt;&lt;TranType&gt;Credit&lt;/TranType&gt;&lt;TranCode&gt;Sale&lt;/TranCode&gt;&lt;InvoiceNo&gt;10&lt;/InvoiceNo&gt;&lt;RefNo&gt;10&lt;/RefNo&gt;&lt;Memo&gt;exuromar&lt;/Memo&gt;&lt;Account&gt; &lt;Track1&gt;%@&lt;/Track1&gt;&lt;Name&gt;MPS TEST&lt;/Name&gt;&lt;/Account&gt;&lt;Amount&gt;&lt;Purchase&gt;%@.00&lt;/Purchase&gt;&lt;/Amount&gt;&lt;/Transaction&gt;&lt;/TStream&gt;</tran><pw>xyz</pw></CreditTransaction></soap:Body></soap:Envelope>", track1, self.creditCardNumberTextField.text, tempString];
+        xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><CreditTransaction xmlns=\"http://www.mercurypay.com\"><tran>&lt;?xml version=\"1.0\"?&gt;&lt;TStream&gt;&lt;Transaction&gt;&lt;MerchantID&gt;395347305=E2ETKN&lt;/MerchantID&gt;&lt;OperatorID&gt;test&lt;/OperatorID&gt;&lt;TranType&gt;Credit&lt;/TranType&gt;&lt;TranCode&gt;Sale&lt;/TranCode&gt;&lt;InvoiceNo&gt;10&lt;/InvoiceNo&gt;&lt;RefNo&gt;10&lt;/RefNo&gt;&lt;Memo&gt;exuromar&lt;/Memo&gt;&lt;Account&gt; &lt;Track1&gt;%@&lt;/Track1&gt;&lt;Name&gt;MPS TEST&lt;/Name&gt;&lt;/Account&gt;&lt;Amount&gt;&lt;Purchase&gt;%@.00&lt;/Purchase&gt;&lt;/Amount&gt;&lt;/Transaction&gt;&lt;/TStream&gt;</tran><pw>123E2ETKN</pw></CreditTransaction></soap:Body></soap:Envelope>", track1, self.creditCardNumberTextField.text, tempString];
         isSwipe = NO;
     }
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:devMercuryURL]];
@@ -985,7 +991,8 @@ static NSUInteger voucherCount = 0 ;
 {
     NSString *result =[[NSString alloc]initWithData:self.myMutableData encoding:NSUTF8StringEncoding];   
     NSLog(@"downloaded output  %@",result);
-    [self displayVoucherPrintScreen];
+   
+    
     NSRange range = [result rangeOfString:@"declined" 
                                       options:NSCaseInsensitiveSearch];
     NSRange range1 = [result rangeOfString:@"invalid" 
@@ -1396,15 +1403,8 @@ static NSUInteger voucherCount = 0 ;
     
     NSString *portName = printerAddress;
     NSString *portSettings = printerPort;
-//    if([uiswitch_portablePrinter isOn] == true)
-//    {
-       // [MiniPrinterFunctions OpenCashDrawerWithPortname:portName portSettings:portSettings];
     [PrinterFunctions OpenCashDrawerWithPortname:portName portSettings:portSettings];
-//    }
-//    else
-//    {
-//        [PrinterFunctions OpenCashDrawerWithPortname:portName portSettings:portSettings];
-//    }
+
 }
 -(IBAction)GetStatus
 {
@@ -1417,7 +1417,7 @@ static NSUInteger voucherCount = 0 ;
 -(IBAction)TextRasterPrinting
 {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    [self SetPortInfo];
+   // [self SetPortInfo];
     rasterPrinting *rasterPrintingVar = [[rasterPrinting alloc] initWithNibName:@"rasterPrinting-iPad" bundle:[NSBundle mainBundle]];
     NSMutableString *tempString = [NSMutableString stringWithString:@""];
     if (isMasterPrint) {

@@ -50,6 +50,9 @@
 }
 @property (nonatomic, retain) id <SignatureViewControllerDelegate> delegate;
 @property (nonatomic, retain) ViewController *parentViewController;
+@property (nonatomic, retain) IBOutlet UIButton *doneButton;
+@property (nonatomic, retain) IBOutlet UIButton *clearButton;
+
 -(IBAction)resetTapped:(id)sender;
 -(IBAction)doneButtonPressed:(id)sender;
 

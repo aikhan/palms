@@ -19,11 +19,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Classes/ViewController.m"
-         timestampString = "363549430.043727"
+         timestampString = "364154618.87411"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "316"
-         endingLineNumber = "316"
+         startingLineNumber = "322"
+         endingLineNumber = "322"
          landmarkName = "-addDancerPriceButtonPressed:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -32,12 +32,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Classes/ViewController.m"
-         timestampString = "363597940.43618"
+         timestampString = "364154618.87411"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1319"
-         endingLineNumber = "1319"
-         landmarkName = "-signatureViewControllerDidFinish:"
+         startingLineNumber = "1326"
+         endingLineNumber = "1326"
+         landmarkName = "-setIDynamoSwitch:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

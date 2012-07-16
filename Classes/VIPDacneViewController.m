@@ -20,7 +20,7 @@ NSArray *myVoucherValuesArray;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        myVoucherValuesArray = [[NSArray alloc] initWithObjects:@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"15", @"20", nil];
+        
     }
     return self;
 }
@@ -30,6 +30,7 @@ NSArray *myVoucherValuesArray;
     selectedRow = 0;
     danceSelectedRow = 0;
     vipSelectedRow = 0;
+    myVoucherValuesArray = [[NSArray alloc] initWithObjects:@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"15", @"20", nil];
     self.dataArray = [[NSMutableArray alloc] initWithObjects:@"5", @"10", @"15", @"20", @"25", @"30", @"35", @"40", @"45", @"50", @"55", @"60", @"65", @"70", @"75", @"80", @"85", @"90", @"95", @"100", nil];
     self.vipRateArray = [[NSMutableArray alloc] initWithObjects:@"0", @"2", @"3", @"5", nil];
     [super viewDidLoad];
@@ -60,7 +61,7 @@ NSArray *myVoucherValuesArray;
         NSLog(@"data array count %d", [self.dataArray count]);
         return [self.dataArray count];
     }else if (tagNumber == 200){
-        NSLog(@"data array count %d", [self.dataArray count]);
+        NSLog(@"data array count %d", [myVoucherValuesArray count]);
         return [myVoucherValuesArray count];
     }
     else {
@@ -105,7 +106,7 @@ NSArray *myVoucherValuesArray;
 //            [cell setAccessoryType:UITableViewCellAccessoryNone];
 //        }
     }
-    else {
+    else if(tagNumber == 101){
         cell.textLabel.text = [self.dataArray objectAtIndex:indexPath.row];
         if (indexPath.row == selectedRow) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];

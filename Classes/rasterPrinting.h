@@ -33,6 +33,9 @@
 @property (nonatomic, retain) UIImage *signatureImage;
 @property (assign) BOOL isMasterPrint;
 
+@property (nonatomic, retain) IBOutlet UIButton *doneButton;
+@property (nonatomic, retain) IBOutlet UIButton *clearButton;
+
 -(void)ResetTableView:(id)sender;
 -(void)ResetTableViewStyle:(id)sender;
 -(void)ResetTableViewPrinterSize:(id)sender;

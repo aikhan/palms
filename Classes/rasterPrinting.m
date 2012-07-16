@@ -22,7 +22,7 @@
 @implementation rasterPrinting
 static NSString *printerAddress = @"TCP:192.168.1.81";
 static NSString *printerPort = @"9100";
-@synthesize uitextview_texttoprint, texttoprint, viewContoller, signatureImage, isMasterPrint;
+@synthesize uitextview_texttoprint, texttoprint, viewContoller, signatureImage, isMasterPrint, doneButton, clearButton;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

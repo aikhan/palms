@@ -32,13 +32,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Classes/ViewController.m"
-         timestampString = "364168923.90163"
+         timestampString = "364296678.830049"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1337"
-         endingLineNumber = "1337"
-         landmarkName = "-setIDynamoSwitch:"
-         landmarkType = "5">
+         startingLineNumber = "1343"
+         endingLineNumber = "1343"
+         landmarkName = "@implementation ViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"

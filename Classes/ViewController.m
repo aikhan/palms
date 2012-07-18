@@ -546,19 +546,7 @@ static NSUInteger voucherCount = 0 ;
 
 - (IBAction)voucherAmountButtonTapped:(id)sender{
     NSLog(@"Do something");
-//    self.vipDanceViewController = [[VIPDacneViewController alloc] init];
-//    self.vipDanceViewController.tagNumber = 200;
-//    self.vipPopOverController.delegate = self;
-//    CGRect frame = self.buttonAmountAboveCC.frame;
-//    [self.vipPopOverController presentPopoverFromRect:frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
-//    [self.vipPopOverController setPopoverContentSize:CGSizeMake(320, 440)];
-//    self.vipDanceViewController.parentController = self;
-//    vipDanceViewController.tagNumber = 200;
-//    //vipDanceViewController.dancesPaymentArray = self.dancesPaymentArray;
-//    vipDanceViewController.view.frame = CGRectMake(0, 0, 320, 440);
-//    [vipDanceViewController.myTableView reloadData];
-//    
-    
+
     self.vipPopOverController.delegate = self;
     CGRect frame = self.buttonAmountAboveCC.frame;//CGRectMake(475, 115, 273, 35);
     [self.vipPopOverController presentPopoverFromRect:frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
@@ -917,6 +905,9 @@ static NSUInteger voucherCount = 0 ;
     
     tempString = [tempString stringByReplacingOccurrencesOfString:@"$" withString:@""];
     tempString = [tempString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (tempString == NULL) {
+        tempString = @"";
+    }
     NSLog(@"AMOUNT IS %@", tempString);
     NSString *xmlString;
     if (!isSwipe) {
@@ -926,9 +917,12 @@ static NSUInteger voucherCount = 0 ;
    // NSString *xmlString = @"<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><CreditTransaction xmlns=\"http://www.mercurypay.com\"><tran>&lt;?xml version=\"1.0\"?&gt;&lt;TStream&gt;&lt;Transaction&gt;&lt;MerchantID&gt;595901&lt;/MerchantID&gt;&lt;OperatorID&gt;test&lt;/OperatorID&gt;&lt;TranType&gt;Credit&lt;/TranType&gt;&lt;TranCode&gt;Sale&lt;/TranCode&gt;&lt;InvoiceNo&gt;10&lt;/InvoiceNo&gt;&lt;RefNo&gt;10&lt;/RefNo&gt;&lt;Memo&gt;exuromar&lt;/Memo&gt;&lt;Account&gt; &lt;Track2&gt;4003000123456781=09085025432198712345&lt;/Track2&gt;&lt;Name&gt;MPS TEST&lt;/Name&gt;&lt;/Account&gt;&lt;Amount&gt;&lt;Purchase&gt;1.00&lt;/Purchase&gt;&lt;/Amount&gt;&lt;/Transaction&gt;&lt;/TStream&gt;</tran><pw>xyz</pw></CreditTransaction></soap:Body></soap:Envelope>";
     }
     else {
-        xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><CreditTransaction xmlns=\"http://www.mercurypay.com\"><tran>&lt;?xml version=\"1.0\"?&gt;&lt;TStream&gt;&lt;Transaction&gt;&lt;MerchantID&gt;395347305=E2ETKN&lt;/MerchantID&gt;&lt;OperatorID&gt;test&lt;/OperatorID&gt;&lt;TranType&gt;Credit&lt;/TranType&gt;&lt;TranCode&gt;Sale&lt;/TranCode&gt;&lt;InvoiceNo&gt;10&lt;/InvoiceNo&gt;&lt;RefNo&gt;10&lt;/RefNo&gt;&lt;Memo&gt;exuromar&lt;/Memo&gt;&lt;Account&gt; &lt;Track1&gt;%@&lt;/Track1&gt;&lt;Name&gt;MPS TEST&lt;/Name&gt;&lt;/Account&gt;&lt;Amount&gt;&lt;Purchase&gt;%@.00&lt;/Purchase&gt;&lt;/Amount&gt;&lt;/Transaction&gt;&lt;/TStream&gt;</tran><pw>123E2ETKN</pw></CreditTransaction></soap:Body></soap:Envelope>", track1, self.creditCardNumberTextField.text, tempString];
+       // xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><CreditTransaction xmlns=\"http://www.mercurypay.com\"><tran>&lt;?xml version=\"1.0\"?&gt;&lt;TStream&gt;&lt;Transaction&gt;&lt;MerchantID&gt;395347305=E2ETKN&lt;/MerchantID&gt;&lt;OperatorID&gt;test&lt;/OperatorID&gt;&lt;TranType&gt;Credit&lt;/TranType&gt;&lt;TranCode&gt;Sale&lt;/TranCode&gt;&lt;InvoiceNo&gt;10&lt;/InvoiceNo&gt;&lt;RefNo&gt;10&lt;/RefNo&gt;&lt;Memo&gt;exuromar&lt;/Memo&gt;&lt;Account&gt; &lt;Track1&gt;%@&lt;/Track1&gt;&lt;Name&gt;MPS TEST&lt;/Name&gt;&lt;/Account&gt;&lt;Amount&gt;&lt;Purchase&gt;%@1.00&lt;/Purchase&gt;&lt;/Amount&gt;&lt;/Transaction&gt;&lt;/TStream&gt;</tran><pw>123E2ETKN</pw></CreditTransaction></soap:Body></soap:Envelope>", track1, self.creditCardNumberTextField.text, tempString];
+        xmlString = @"<?xml version=\"1.0\"?><TStream> <Transaction><MerchantID>395347305=E2E</MerchantID><OperatorID>Test</OperatorID><TranType>Credit</TranType><PartialAuth>Allow</PartialAuth><TranCode>Sale</TranCode><InvoiceNo>1</InvoiceNo><RefNo>1</RefNo><Memo>Product v1.1</Memo><Account><EncryptedFormat>MagneSafe</EncryptedFormat><AccountSource>Swiped</AccountSource><EncryptedBlock>D7019F295F395B56233CA41F357CD5563D6FB07E78D418EB296473AFC02989237D97F9B40D503272</EncryptedBlock><EncryptedKey>9500530000000720000F</EncryptedKey></Account><Amount><Purchase>2.25</Purchase>      </Amount>        </Transaction></TStream>";
         isSwipe = NO;
     }
+    xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><CreditTransaction xmlns=\"http://www.mercurypay.com\"><tran>&lt;?xml version=\"1.0\"?&gt;&lt;TStream&gt;&lt;Transaction&gt;&lt;MerchantID&gt;595901&lt;/MerchantID&gt;&lt;OperatorID&gt;test&lt;/OperatorID&gt;&lt;TranType&gt;Credit&lt;/TranType&gt;&lt;TranCode&gt;Sale&lt;/TranCode&gt;&lt;InvoiceNo&gt;10&lt;/InvoiceNo&gt;&lt;RefNo&gt;10&lt;/RefNo&gt;&lt;Memo&gt;exuromar&lt;/Memo&gt;&lt;Account&gt; &lt;Track1&gt;%@&lt;/Track1&gt;&lt;Name&gt;MPS TEST&lt;/Name&gt;&lt;/Account&gt;&lt;Amount&gt;&lt;Purchase&gt;%@1.00&lt;/Purchase&gt;&lt;/Amount&gt;&lt;/Transaction&gt;&lt;/TStream&gt;</tran><pw>xyz</pw></CreditTransaction></soap:Body></soap:Envelope>", track1, self.creditCardNumberTextField.text, tempString];
+   // xmlString = @"<?xml version=\"1.0\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><TStream> <Transaction><MerchantID>395347305=E2E</MerchantID><OperatorID>Test</OperatorID><TranType>Credit</TranType><PartialAuth>Allow</PartialAuth><TranCode>Sale</TranCode><InvoiceNo>1</InvoiceNo><RefNo>1</RefNo><Memo>Product v1.1</Memo><Account><EncryptedFormat>MagneSafe</EncryptedFormat><AccountSource>Swiped</AccountSource><EncryptedBlock>D7019F295F395B56233CA41F357CD5563D6FB07E78D418EB296473AFC02989237D97F9B40D503272</EncryptedBlock><EncryptedKey>9500530000000720000F</EncryptedKey></Account><Amount><Purchase>2.25</Purchase>      </Amount> <pw>123E2ETKN</pw>       </Transaction></TStream></soap:Body></soap:Envelope>";
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:devMercuryURL]];
     
     [req setValue:@"text/xml" forHTTPHeaderField:@"Content-Type"];
@@ -1265,7 +1259,7 @@ static NSUInteger voucherCount = 0 ;
             self.signatureViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
             [self presentModalViewController:self.signatureViewController animated:YES];
             isSwipe = YES;
-            track1 = [mtSCRALib getResponseData];
+            track1 = [mtSCRALib getTrack2];//[mtSCRALib getResponseData];
         }
         [mtSCRALib clearBuffers];
         

@@ -45,6 +45,8 @@ static BOOL isCashButtonSelected = NO;
 static BOOL isVoucherButtonSelected = NO;
 static BOOL isSwipe = NO;
 static NSString *track1;
+static NSString *track2;
+static NSString *KSN;
 static BOOL isMasterPrint = NO;
 static BOOL isVoucherPrint = NO;
 static NSUInteger voucherCount = 0 ;
@@ -232,18 +234,7 @@ static NSUInteger voucherCount = 0 ;
         PrinterManager *pm = (PrinterManager*)[PrinterManager shared];
         [pm openCashDrawerWithPortname:portName portSettings:portSettings];
     }
-        
-        
-       
-        
-  //  }
-    
-    /*self.signatureViewController = nil;
-     self.signatureViewController = [[SignatureViewController alloc] initWithNibName:@"SignatureViewController" bundle:[NSBundle mainBundle]];
-    
-    [self presentModalViewController:self.signatureViewController animated:YES];
-[self beginTransaction];
-     */
+   
     
 }
 - (void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -481,8 +472,6 @@ static NSUInteger voucherCount = 0 ;
             
             EditDancerListViewController * editDancerListViewController = [[EditDancerListViewController alloc] initWithNibName:@"EditDancerListViewController" bundle:[NSBundle mainBundle]];
             UINavigationController *navController = [[[UINavigationController alloc] initWithRootViewController:editDancerListViewController] autorelease];
-           // navController.navigationBarHidden = YES;
-           // [self presentModalViewController:navController animated:YES];
             self.addDancerPopoverController = [[UIPopoverController alloc]initWithContentViewController:navController];
             self.addDancerPopoverController.delegate = self;
             
@@ -784,10 +773,8 @@ static NSUInteger voucherCount = 0 ;
             NSLog(@"Removed mins");
         }
         [self.dancesPaymentDetails removeObjectAtIndex:indexPath.row];
-//        [self.dancesPaymentTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
         [self.dancersTable reloadData];
         [self calculatePaymentDetails];
-      //  [self.dancesPaymentTable reloadData];
         
     }
 }
@@ -847,16 +834,7 @@ static NSUInteger voucherCount = 0 ;
     NSLog(@"textFieldDidEndEditing");
     if (textField.tag == 100) {
         amountToBeCharged = textField.text;
-        NSLog(@"amount to be charged %@", amountToBeCharged);
-       /* self.signatureViewController = [[SignatureViewController alloc] initWithNibName:@"SignatureViewController" bundle:[NSBundle mainBundle]];
-        self.signatureViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-        self.signatureViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-      //  self.signatureViewController.parentViewController = self;
-        [self presentModalViewController:self.signatureViewController animated:NO];
-        */
-//        [self beginTransaction];
-        
-        
+        NSLog(@"amount to be charged %@", amountToBeCharged);    
     }
     [self.dancerPayTextField resignFirstResponder];
     
@@ -869,12 +847,7 @@ static NSUInteger voucherCount = 0 ;
 }
 
 - (void)beginTransaction{
-      /* if ([ViewController checkReachabilityForHost:@"www.google.com"]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Make sure you are connected to the internet" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-        return;
-    }
-    */
+ 
     NSMutableString *tempExpString;
     if(!isSwipe){
         NSMutableString *expirationString = [NSMutableString stringWithString:self.creditCardCVVTextField.text];//TODO: CCV field is connected with the expiration field from the IBOUtlet
@@ -914,15 +887,13 @@ static NSUInteger voucherCount = 0 ;
         
     xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><CreditTransaction xmlns=\"http://www.mercurypay.com\"><tran>&lt;?xml version=\"1.0\"?&gt;&lt;TStream&gt;&lt;Transaction&gt;&lt;MerchantID&gt;595901&lt;/MerchantID&gt;&lt;OperatorID&gt;test&lt;/OperatorID&gt;&lt;TranType&gt;Credit&lt;/TranType&gt;&lt;TranCode&gt;Sale&lt;/TranCode&gt;&lt;InvoiceNo&gt;10&lt;/InvoiceNo&gt;&lt;RefNo&gt;10&lt;/RefNo&gt;&lt;Memo&gt;exuromar&lt;/Memo&gt;&lt;Account&gt; &lt;Track2&gt;%@=%@5025432198712345&lt;/Track2&gt;&lt;Name&gt;MPS TEST&lt;/Name&gt;&lt;/Account&gt;&lt;Amount&gt;&lt;Purchase&gt;%@.00&lt;/Purchase&gt;&lt;/Amount&gt;&lt;/Transaction&gt;&lt;/TStream&gt;</tran><pw>xyz</pw></CreditTransaction></soap:Body></soap:Envelope>", self.creditCardNumberTextField.text, tempExpString, tempString];
         NSLog(@"XML STring %@", xmlString);
-   // NSString *xmlString = @"<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><CreditTransaction xmlns=\"http://www.mercurypay.com\"><tran>&lt;?xml version=\"1.0\"?&gt;&lt;TStream&gt;&lt;Transaction&gt;&lt;MerchantID&gt;595901&lt;/MerchantID&gt;&lt;OperatorID&gt;test&lt;/OperatorID&gt;&lt;TranType&gt;Credit&lt;/TranType&gt;&lt;TranCode&gt;Sale&lt;/TranCode&gt;&lt;InvoiceNo&gt;10&lt;/InvoiceNo&gt;&lt;RefNo&gt;10&lt;/RefNo&gt;&lt;Memo&gt;exuromar&lt;/Memo&gt;&lt;Account&gt; &lt;Track2&gt;4003000123456781=09085025432198712345&lt;/Track2&gt;&lt;Name&gt;MPS TEST&lt;/Name&gt;&lt;/Account&gt;&lt;Amount&gt;&lt;Purchase&gt;1.00&lt;/Purchase&gt;&lt;/Amount&gt;&lt;/Transaction&gt;&lt;/TStream&gt;</tran><pw>xyz</pw></CreditTransaction></soap:Body></soap:Envelope>";
     }
     else {
-       // xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><CreditTransaction xmlns=\"http://www.mercurypay.com\"><tran>&lt;?xml version=\"1.0\"?&gt;&lt;TStream&gt;&lt;Transaction&gt;&lt;MerchantID&gt;395347305=E2ETKN&lt;/MerchantID&gt;&lt;OperatorID&gt;test&lt;/OperatorID&gt;&lt;TranType&gt;Credit&lt;/TranType&gt;&lt;TranCode&gt;Sale&lt;/TranCode&gt;&lt;InvoiceNo&gt;10&lt;/InvoiceNo&gt;&lt;RefNo&gt;10&lt;/RefNo&gt;&lt;Memo&gt;exuromar&lt;/Memo&gt;&lt;Account&gt; &lt;Track1&gt;%@&lt;/Track1&gt;&lt;Name&gt;MPS TEST&lt;/Name&gt;&lt;/Account&gt;&lt;Amount&gt;&lt;Purchase&gt;%@1.00&lt;/Purchase&gt;&lt;/Amount&gt;&lt;/Transaction&gt;&lt;/TStream&gt;</tran><pw>123E2ETKN</pw></CreditTransaction></soap:Body></soap:Envelope>", track1, self.creditCardNumberTextField.text, tempString];
-        xmlString = @"<?xml version=\"1.0\"?><TStream> <Transaction><MerchantID>395347305=E2E</MerchantID><OperatorID>Test</OperatorID><TranType>Credit</TranType><PartialAuth>Allow</PartialAuth><TranCode>Sale</TranCode><InvoiceNo>1</InvoiceNo><RefNo>1</RefNo><Memo>Product v1.1</Memo><Account><EncryptedFormat>MagneSafe</EncryptedFormat><AccountSource>Swiped</AccountSource><EncryptedBlock>D7019F295F395B56233CA41F357CD5563D6FB07E78D418EB296473AFC02989237D97F9B40D503272</EncryptedBlock><EncryptedKey>9500530000000720000F</EncryptedKey></Account><Amount><Purchase>2.25</Purchase>      </Amount>        </Transaction></TStream>";
+        xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><TStream> <Transaction><MerchantID>395347305=E2E</MerchantID><OperatorID>Test</OperatorID><TranType>Credit</TranType><PartialAuth>Allow</PartialAuth><TranCode>Sale</TranCode><InvoiceNo>1</InvoiceNo><RefNo>1</RefNo><Memo>Product v1.1</Memo><Account><EncryptedFormat>MagneSafe</EncryptedFormat><AccountSource>Swiped</AccountSource><EncryptedBlock>%@</EncryptedBlock><EncryptedKey>%@</EncryptedKey></Account><Amount><Purchase>2.25</Purchase>      </Amount> <pw>123E2ETKN</pw>       </Transaction></TStream></soap:Body></soap:Envelope>",  track2, KSN];
         isSwipe = NO;
     }
-    xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><CreditTransaction xmlns=\"http://www.mercurypay.com\"><tran>&lt;?xml version=\"1.0\"?&gt;&lt;TStream&gt;&lt;Transaction&gt;&lt;MerchantID&gt;595901&lt;/MerchantID&gt;&lt;OperatorID&gt;test&lt;/OperatorID&gt;&lt;TranType&gt;Credit&lt;/TranType&gt;&lt;TranCode&gt;Sale&lt;/TranCode&gt;&lt;InvoiceNo&gt;10&lt;/InvoiceNo&gt;&lt;RefNo&gt;10&lt;/RefNo&gt;&lt;Memo&gt;exuromar&lt;/Memo&gt;&lt;Account&gt; &lt;Track1&gt;%@&lt;/Track1&gt;&lt;Name&gt;MPS TEST&lt;/Name&gt;&lt;/Account&gt;&lt;Amount&gt;&lt;Purchase&gt;%@1.00&lt;/Purchase&gt;&lt;/Amount&gt;&lt;/Transaction&gt;&lt;/TStream&gt;</tran><pw>xyz</pw></CreditTransaction></soap:Body></soap:Envelope>", track1, self.creditCardNumberTextField.text, tempString];
-   // xmlString = @"<?xml version=\"1.0\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><TStream> <Transaction><MerchantID>395347305=E2E</MerchantID><OperatorID>Test</OperatorID><TranType>Credit</TranType><PartialAuth>Allow</PartialAuth><TranCode>Sale</TranCode><InvoiceNo>1</InvoiceNo><RefNo>1</RefNo><Memo>Product v1.1</Memo><Account><EncryptedFormat>MagneSafe</EncryptedFormat><AccountSource>Swiped</AccountSource><EncryptedBlock>D7019F295F395B56233CA41F357CD5563D6FB07E78D418EB296473AFC02989237D97F9B40D503272</EncryptedBlock><EncryptedKey>9500530000000720000F</EncryptedKey></Account><Amount><Purchase>2.25</Purchase>      </Amount> <pw>123E2ETKN</pw>       </Transaction></TStream></soap:Body></soap:Envelope>";
+   
+   
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:devMercuryURL]];
     
     [req setValue:@"text/xml" forHTTPHeaderField:@"Content-Type"];
@@ -1025,11 +996,6 @@ static NSUInteger voucherCount = 0 ;
 
 - (void)displayVoucherPrintScreen{
     UIImage *voucherImage = [UIImage imageNamed:@"voucherprint"];
-//    voucherCount++;
-//    VoucherPrintViewController *voucherPrintVC = [[VoucherPrintViewController alloc] initWithNibName:@"VoucherPrintViewController" bundle:[NSBundle mainBundle]];
-//    voucherPrintVC.modalPresentationStyle = UIModalPresentationFormSheet;
-//    voucherPrintVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//    [self presentModalViewController:voucherPrintVC animated:YES];
     [PrinterManager PrintImageWithPortname:printerAddress portSettings:printerPort imageToPrint:voucherImage maxWidth:480];
      PrinterManager *pm = (PrinterManager*)[PrinterManager shared];
     [pm openCashDrawerWithPortname:portName portSettings:portSettings];
@@ -1259,7 +1225,8 @@ static NSUInteger voucherCount = 0 ;
             self.signatureViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
             [self presentModalViewController:self.signatureViewController animated:YES];
             isSwipe = YES;
-            track1 = [mtSCRALib getTrack2];//[mtSCRALib getResponseData];
+            track2 = [mtSCRALib getTrack2];//[mtSCRALib getResponseData];
+            KSN = [mtSCRALib getKSN];
         }
         [mtSCRALib clearBuffers];
         
@@ -1436,7 +1403,7 @@ static NSUInteger voucherCount = 0 ;
         }
     }
     else {
-      //  NSMutableString *tempString = [NSMutableString stringWithString:@""];
+
         Dancer *dancer = self.currentDancer;
         NSString *houseFee = dancer.houseFee;
         NSString *vipFee = [NSString stringWithFormat:@"%d",[dancer.dances intValue] * [dancer.pricePerDance intValue] ];
@@ -1444,15 +1411,7 @@ static NSUInteger voucherCount = 0 ;
         NSString *couchFee = [NSString stringWithFormat:@"%d", [dancer.totalFee intValue] - ([houseFee intValue] + [vipFee intValue])];
         [tempString appendString:[NSString stringWithFormat:@"1.    %@                                                         %@                     %@              %@                %@ \n", dancer.dancerName, houseFee, vipFee, couchFee, dancer.totalFee]];
     }
-   /* for(NSString *string in self.dancesPaymentDetails)
-    {
-        [tempString appendString:string];
-        [tempString appendString:@"\n"];
-    }*/
-    
-   // [tempString appendString:[NSString stringWithFormat:@"1.    %@                                                         %@                     %@              %@                %@", self.currentDancer.dancerName, houseFee, vipFee, couchFee, self.totalAmountLabel.text]];
-    
-    
+
     rasterPrintingVar.signatureImage = self.signatureImage;
     rasterPrintingVar.uitextview_texttoprint.text = tempString;
     rasterPrintingVar.texttoprint = tempString;
@@ -1463,39 +1422,4 @@ static NSUInteger voucherCount = 0 ;
     isMasterPrint = NO;
 }
 
-+(NSString *)HTMLCSS
-{
-    NSString *cssDefninition = @"<html>\
-    <head>\
-    <style type=\"text/css\">\
-    Code {color:blue;}\n\
-    CodeDef {color:blue;font-weight:bold}\n\
-    TitleBold {font-weight:bold}\n\
-    It1 {font-style:italic; font-size:12}\n\
-    LargeTitle{font-size:20px}\n\
-    SectionHeader{font-size:17;font-weight:bold}\n\
-    UnderlineTitle {text-decoration:underline}\n\
-    div_cutParam {position:absolute; top:100; left:30; width:200px;font-style:italic;}\n\
-    div_cutParam0 {position:absolute; top:130; left:30; font-style:italic;}\n\
-    div_cutParam1 {position:absolute; top:145; left:30; font-style:italic;}\n\
-    div_cutParam2 {position:absolute; top:160; left:30; font-style:italic;}\n\
-    div_cutParam3 {position:absolute; top:175; left:30; font-style:italic;}\n\
-    .div-tableBarcodeWidth{display:table;}\n\
-    .div-table-rowBarcodeWidth{display:table-row;}\n\
-    .div-table-colBarcodeWidthHeader{display:table-cell;border:1px solid #000000;background: #800000;color:#ffffff}\n\
-    .div-table-colBarcodeWidthHeader2{display:table-cell;border:1px solid #000000;background: #800000;color:#ffffff}\n\
-    .div-table-colBarcodeWidth{display:table-cell;border:1px solid #000000;}\n\
-    rightMov {position:absolute; left:30px; font-style:italic;}\n\
-    rightMov_NOI {position:absolute; left:55px;}\n\
-    rightMov_NOI2 {position:absolute; left:90px;}\n\
-    StandardItalic {font-style:italic}\
-    .div-tableCut{display:table;}\n\
-    .div-table-rowCut{display:table-row;}\n\
-    .div-table-colFirstCut{display:table-cell;width:40px}\n\
-    .div-table-colCut{display:table-cell;}\n\
-    .div-table-colRaster{display:table-cell; border:1px solid #000000;}\n\
-    </style>\
-    </head>";
-    return cssDefninition;
-}
 @end

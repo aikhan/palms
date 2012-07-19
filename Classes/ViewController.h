@@ -144,7 +144,6 @@
 +(void)setPortName:(NSString *)m_portName;
 +(NSString*)getPortSettings;
 +(void)setPortSettings:(NSString *)m_portSettings;
-+(NSString *)HTMLCSS;
 
 -(IBAction)OpenCashDrawer;
 -(IBAction)GetStatus;

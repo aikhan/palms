@@ -891,22 +891,27 @@ static NSUInteger voucherCount = 0 ;
         xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><TStream> <Transaction><MerchantID>395347305=E2E</MerchantID><OperatorID>Test</OperatorID><TranType>Credit</TranType><PartialAuth>Allow</PartialAuth><TranCode>Sale</TranCode><InvoiceNo>1</InvoiceNo><RefNo>1</RefNo><Memo>Product v1.1</Memo><Account><EncryptedFormat>MagneSafe</EncryptedFormat><AccountSource>Swiped</AccountSource><EncryptedBlock>%@</EncryptedBlock><EncryptedKey>%@</EncryptedKey></Account><Amount><Purchase>2.25</Purchase>      </Amount> <pw>123E2E</pw>       </Transaction></TStream></soap:Body></soap:Envelope>",  track2, KSN];
         isSwipe = NO;
     }
+    xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><TStream> <Transaction><MerchantID>395347305=E2E</MerchantID><OperatorID>Test</OperatorID><TranType>Credit</TranType><PartialAuth>Allow</PartialAuth><TranCode>Sale</TranCode><InvoiceNo>1</InvoiceNo><RefNo>1</RefNo><Memo>Product v1.1</Memo><Account><EncryptedFormat>MagneSafe</EncryptedFormat><AccountSource>Swiped</AccountSource><EncryptedBlock>%@</EncryptedBlock><EncryptedKey>%@</EncryptedKey></Account><Amount><Purchase>2.25</Purchase>      </Amount> <pw>123E2E</pw>       </Transaction></TStream></soap:Body></soap:Envelope>",  track2, KSN];
    // xmlString = @"<?xml version=\"1.0\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><TStream> <Transaction><MerchantID>395347308=E2ETKN</MerchantID><OperatorID>test</OperatorID><TranType>Credit</TranType><PartialAuth>Allow</PartialAuth><TranCode>Sale</TranCode><InvoiceNo>1</InvoiceNo><RefNo>1</RefNo><Memo>Product v1.1</Memo><Account><EncryptedFormat>MagneSafe</EncryptedFormat><AccountSource>Swiped</AccountSource><EncryptedBlock>D7019F295F395B56233CA41F357CD5563D6FB07E78D418EB296473AFC02989237D97F9B40D503272</EncryptedBlock> <EncryptedKey>9500530000000720000F</EncryptedKey></Account><Amount><Purchase>2.25</Purchase>      </Amount> <pw>123E2ETKN</pw>       </Transaction></TStream></soap:Body></soap:Envelope>";//,  track2, KSN];
     //xmlString = @"<?xml version=\"1.0\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><TStream><Transaction><MerchantID>395347305=E2E</MerchantID><TranType>Credit</TranType><TranCode>Sale</TranCode><InvoiceNo>1</InvoiceNo><RefNo>1</RefNo><Memo>MPS Example XML v1.0</Memo><Account><Track2>BDEC23AAA899006C36843F14E0F6A6472C8CDF81271764E160B455FC55AA5DD05F2AD04769614A91</Track2><Name>MPS TEST</Name></Account><Amount><Purchase>1.00</Purchase></Amount> <pw>123E2ETKN</pw><TerminalName>MPS Terminal</TerminalName><ShiftID>MPS Shift</ShiftID><OperatorID>MPS Operator</OperatorID></Transaction></TStream></soap:Body></soap:Envelope>";
-  //  xmlString = @"<?xml version=\"1.0\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><TStream> <Transaction><MerchantID>395347305=E2E</MerchantID><OperatorID>test</OperatorID><TranType>Credit</TranType><PartialAuth>Allow</PartialAuth><TranCode>Sale</TranCode><InvoiceNo>1</InvoiceNo><RefNo>1</RefNo><Memo>Product v1.1</Memo><Account><EncryptedFormat>MagneSafe</EncryptedFormat><AccountSource>Swiped</AccountSource><EncryptedBlock>D7019F295F395B56233CA41F357CD5563D6FB07E78D418EB296473AFC02989237D97F9B40D503272</EncryptedBlock> <EncryptedKey>9500530000000720000F</EncryptedKey></Account><Amount><Purchase>2.25</Purchase>      </Amount> <pw>123E2E</pw>       </Transaction></TStream></soap:Body></soap:Envelope>";
+  //  xmlString = @"<?xml version=\"1.0\"?> <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><TStream> <Transaction><MerchantID>395347305=E2E</MerchantID><OperatorID>test</OperatorID><TranType>Credit</TranType><PartialAuth>Allow</PartialAuth><TranCode>Sale</TranCode><InvoiceNo>1</InvoiceNo><RefNo>1</RefNo><Memo>Product v1.1</Memo><Account><EncryptedFormat>MagneSafe</EncryptedFormat><AccountSource>Swiped</AccountSource><EncryptedBlock>9012090B01F8C4000007</EncryptedBlock> <EncryptedKey>9500530000000720000F</EncryptedKey></Account><Amount><Purchase>2.25</Purchase>      </Amount> <pw>123E2E</pw>       </Transaction></TStream></soap:Body></soap:Envelope>";
    NSLog(@"XML STring %@", xmlString);
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:devMercuryURL]];
-    
-    [req setValue:@"text/xml" forHTTPHeaderField:@"Content-Type"];
-    [req setValue:@"MPS Transact 1.2.0.4" forHTTPHeaderField:@"User-Agent"];
-    [req setValue:@"utf-8" forHTTPHeaderField:@"charset"];
-    [req setValue:@"http://www.mercurypay.com/CreditTransaction" forHTTPHeaderField:@"SOAPAction"];
+    //NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:devMercuryURL]];
+    NSString *URLSTRING = [NSString stringWithFormat:@"http://semanticdevlab.com/ankurpalms/xmlwrite.php?xml=%@", xmlString];
+    URLSTRING = [URLSTRING stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:URLSTRING]];
+    NSLog(@"URLSTRING %@", URLSTRING);
+    NSLog(@"PRINT URL %@", [NSString stringWithFormat:@"http://semanticdevlab.com/ankurpalms/xmlwrite.php?xml=%@", xmlString]);
+   // [req setValue:@"text/xml" forHTTPHeaderField:@"Content-Type"];
+   // [req setValue:@"MPS Transact 1.2.0.4" forHTTPHeaderField:@"User-Agent"];
+   // [req setValue:@"utf-8" forHTTPHeaderField:@"charset"];
+   // [req setValue:@"http://www.mercurypay.com/CreditTransaction" forHTTPHeaderField:@"SOAPAction"];
      
     NSString *contentLength = [NSString stringWithFormat:@"%d", [xmlString length]];
-	[req addValue:contentLength forHTTPHeaderField:@"Content-Length"];
+	//[req addValue:contentLength forHTTPHeaderField:@"Content-Length"];
 	
-	[req setHTTPMethod:@"POST"];
-	[req setHTTPBody:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
+	[req setHTTPMethod:@"GET"];
+	//[req setHTTPBody:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
     if (conn) {
         self.myMutableData = [[NSMutableData alloc] init];
@@ -919,7 +924,13 @@ static NSUInteger voucherCount = 0 ;
 {
     return nil;
 }
-
+-(NSString *)urlEncodeUsingEncoding:(NSStringEncoding)encoding {
+    return (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                               (CFStringRef)self,
+                                                               NULL,
+                                                               (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
+                                                               CFStringConvertNSStringEncodingToEncoding(encoding));
+}
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;

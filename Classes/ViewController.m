@@ -1197,6 +1197,10 @@ static NSUInteger voucherCount = 0 ;
             [alert show];
             UIAlertView *alert1 = [[UIAlertView alloc] initWithTitle:@"Success" message:pResponse delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert1 show];
+            UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Block 1 is working" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert2 show];
+            return;
+            
            // self.rawResponseData.text = [mtSCRALib getResponseData];
         }
         else

@@ -1229,6 +1229,13 @@ static NSUInteger voucherCount = 0 ;
             [alert show];
             UIAlertView *alert1 = [[UIAlertView alloc] initWithTitle:@"Success" message:[mtSCRALib getResponseData] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert1 show];
+            track2 = [mtSCRALib getTrack2Masked];//[mtSCRALib getResponseData];
+            KSN = [mtSCRALib getKSN];
+            if ([KSN isEqualToString:@""] || [track2 isEqualToString:@""] || track2 == nil) {
+                UIAlertView *alert1 = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Try again, values were not fetched properly" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert1 show];
+                return;
+            }
          //   self.rawResponseData.text = [mtSCRALib getResponseData];
             self.signatureViewController = nil;
             self.signatureViewController = [[SignatureViewController alloc] initWithNibName:@"SignatureViewController" bundle:[NSBundle mainBundle]];
@@ -1237,8 +1244,7 @@ static NSUInteger voucherCount = 0 ;
             self.signatureViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
             [self presentModalViewController:self.signatureViewController animated:YES];
             isSwipe = YES;
-            track2 = [mtSCRALib getTrack2];//[mtSCRALib getResponseData];
-            KSN = [mtSCRALib getKSN];
+            
         }
         [mtSCRALib clearBuffers];
         
